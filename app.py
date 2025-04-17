@@ -12,7 +12,7 @@ USERNAME = "austinw.035@gmail.com"
 PASSWORD = "Wgroup1234!@"
 
 # n8n workflow URL
-N8N_WORKFLOW_URL = "https://primary-production-0e4c.up.railway.app/webhook-test/82802ab3-08a1-415f-bf3b-2819226afcc3"
+N8N_WORKFLOW_URL = "https://primary-production-0e4c.up.railway.app/webhook/82802ab3-08a1-415f-bf3b-2819226afcc3"
 
 # Database connection string (update with your credentials)
 DB_CONNECTION_STRING = "postgresql://neondb_owner:npg_k2XmCRLn0gdS@ep-purple-surf-a8mqpc40-pooler.eastus2.azure.neon.tech/neondb?sslmode=require"
