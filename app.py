@@ -7,18 +7,10 @@ import psycopg2
 from sqlalchemy import create_engine, text # Import text
 import json # Import json
 
-# Hardcoded credentials
-USERNAME = "austinw.035@gmail.com"
-PASSWORD = "Wgroup1234!@"
+# Secrets are loaded from .streamlit/secrets.toml
 
-# n8n workflow URL
-N8N_WORKFLOW_URL = "https://primary-production-0e4c.up.railway.app/webhook/82802ab3-08a1-415f-bf3b-2819226afcc3"
-
-# Database connection string (update with your credentials)
-DB_CONNECTION_STRING = "postgresql://neondb_owner:npg_k2XmCRLn0gdS@ep-purple-surf-a8mqpc40-pooler.eastus2.azure.neon.tech/neondb?sslmode=require"
-
-# Initialize database engine
-engine = create_engine(DB_CONNECTION_STRING)
+# Initialize database engine using secrets
+engine = create_engine(st.secrets.database.connection_string)
 
 # --- Helper Functions ---
 def load_csv():
@@ -75,7 +67,7 @@ def main():
         username = st.text_input("Username")
         password = st.text_input("Password", type="password")
         if st.button("Login"):
-            if username == USERNAME and password == PASSWORD:
+            if username == st.secrets.credentials.username and password == st.secrets.credentials.password:
                 st.session_state.logged_in = True
                 st.rerun() # Force rerun after successful login
             else:
@@ -231,7 +223,7 @@ def main():
                             'Content-Type': 'text/csv',
                             'x-id': str(selected_file_id) # Add the file ID as a header
                         }
-                        response = requests.post(N8N_WORKFLOW_URL, data=csv_data_text.encode('utf-8'), headers=headers)
+                        response = requests.post(st.secrets.n8n.workflow_url, data=csv_data_text.encode('utf-8'), headers=headers)
 
                         if response.status_code == 200:
                             # Update status to 'inprogress' in DB using ID
